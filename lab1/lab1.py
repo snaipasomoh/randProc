@@ -6,21 +6,29 @@ P = np.array([[0.159, 0.177, 0.664],
               [    0, 0.439, 0.561],
               [    0, 0.173, 0.827]])
 
-Pk = np.array([[0.458, 0, 0.542],
-              [    0.192, 0.195, 0.613],
-              [    0.544, 0, 0.456]])
+Pk = np.array([[0.458,     0, 0.542],
+              [ 0.192, 0.195, 0.613],
+              [ 0.544,     0, 0.456]])
 
 def trans_matrices(matrix, eps=0.00001, p=False):
     n = 2
     curr_matrix = np.linalg.matrix_power(matrix, 2)
     delta = max([abs(x) for x in np.nditer((matrix - curr_matrix))])
     while delta > eps:
-        if p: print(curr_matrix)
+        if p:
+            print("n:", n)
+            print("delta:", delta)
+            print(curr_matrix)
+            print("")
         n += 1
         prev_matrix = curr_matrix
         curr_matrix = np.linalg.matrix_power(matrix, n)
         delta = max([abs(x) for x in np.nditer((prev_matrix - curr_matrix))])
-    if p: print(curr_matrix)
+    if p:
+        print("n:", n)
+        print("delta:", delta)
+        print(curr_matrix)
+        print("")
     return n
 
 def find_stationar(matrix):
@@ -66,9 +74,9 @@ def calc_comebacks(matrix, start_pos, eps=0.001, p=False):
 
 
 
-# print(trans_matrices(P, p=True))
-# foo = find_stationar(P)
-# print(foo)
+print(trans_matrices(P, p=True))
+foo = find_stationar(P)
+print(foo)
 # print(foo.dot(P))
 # print(find_distributions(P, [1, 0, 0], p=True))
 # print(calc_comebacks(P, 3, p=True))
