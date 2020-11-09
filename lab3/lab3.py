@@ -37,7 +37,7 @@ def simulate():
         M = len([i for i in system if i.get("Type") == "M"])
         states.append((N, M))
         curr_obj = system[0]
-        print(curr_obj.get("Death"), curr_obj.get("Id"), curr_obj.get("Type"))
+        print(N, M, curr_obj.get("Death"), curr_obj.get("Id"), curr_obj.get("Type"))
         system = system[1:]
         t = curr_obj.get("Death")
         temp = rnd.random()
@@ -45,7 +45,7 @@ def simulate():
         if curr_obj.get("Type") == "N":
             if temp < pn1:
                 dt = gen_N_lifetime((N, M))
-                print("SN(1)", dt, -1, N + 1, M, end = " ")
+                print("SN(1)", dt, -1, end = " ")
                 obj_number += 1
                 curr_obj["Child1"] = obj_number
                 objects.append(curr_obj)
@@ -58,7 +58,7 @@ def simulate():
             elif temp < pn1 + pn2:
                 dt1 = gen_N_lifetime((N, M))
                 dt2 = gen_N_lifetime((N, M))
-                print("SN(2)", min(dt1, dt2), max(dt1, dt2), N + 2, M, end = " ")
+                print("SN(2)", min(dt1, dt2), max(dt1, dt2), end = " ")
                 obj_number += 1
                 curr_obj["Child1"] = obj_number
                 system.append({"Id": obj_number,
@@ -79,7 +79,7 @@ def simulate():
             else:
                 dtn = gen_N_lifetime((N, M))
                 dtm = gen_M_lifetime((N, M))
-                print("SN(3)", min(dtn, dtm), max(dtn, dtm), N + 1, M + 1, end = " ")
+                print("SN(3)", min(dtn, dtm), max(dtn, dtm), end = " ")
                 obj_number += 1
                 curr_obj["Child1"] = obj_number
                 system.append({"Id": obj_number,
@@ -100,7 +100,7 @@ def simulate():
         else:
             if temp < pm1:
                 dt = gen_M_lifetime((N, M))
-                print("SM(1)", dt, -1, N, M + 1, end = " ")
+                print("SM(1)", dt, -1, end = " ")
                 obj_number += 1
                 curr_obj["Child1"] = obj_number
                 objects.append(curr_obj)
@@ -111,11 +111,14 @@ def simulate():
                                "Child1": -1,
                                "Child2": -1})
             else:
-                print("SM(0)", -1, -1, N, M, end = " ")
+                print("SM(0)", -1, -1, end = " ")
                 objects.append(curr_obj)
     system.sort(key = lambda i: i.get("Death"))
+    N = len([i for i in system if i.get("Type") == "N"])
+    M = len([i for i in system if i.get("Type") == "M"])
+    states.append((N, M))
     curr_obj = system[0]
-    print(curr_obj.get("Death"), curr_obj.get("Id"), curr_obj.get("Type"))
+    print(N, M, curr_obj.get("Death"), curr_obj.get("Id"), curr_obj.get("Type"))
 
     for i in system: objects.append(i)
     objects.sort(key = lambda i: i.get("Id"))
@@ -126,6 +129,6 @@ def simulate():
         i.get("Child1"), i.get("Child2"))
     
     print("\n\n####    TABLE 3    ####")
-    for i in set(states): print(i[0], i[1])
+    for i in sorted(set(states)): print(i[0], i[1])
 
 simulate()
