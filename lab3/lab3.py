@@ -118,7 +118,7 @@ def simulate():
     M = len([i for i in system if i.get("Type") == "M"])
     states.append((N, M))
     curr_obj = system[0]
-    print(N, M, curr_obj.get("Death"), curr_obj.get("Id"), curr_obj.get("Type"))
+    print(N, M, curr_obj.get("Death") - objects[-1].get("Death"), curr_obj.get("Id"), curr_obj.get("Type"))
 
     for i in system: objects.append(i)
     objects.sort(key = lambda i: i.get("Id"))
