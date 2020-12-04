@@ -29,7 +29,7 @@ def simulate():
                "Child2": -1}]
     
     print("####    TABLE 1    ####")
-    print(1, t, "SN(1)", system[0].get("Death"), -1, 1, 0, end = " ")
+    print(1, t, "SN(1)", system[0].get("Death"), -1, end = " ")
 
     for event_number in range(2, 101):
         system.sort(key = lambda i: i.get("Death"))
@@ -37,7 +37,7 @@ def simulate():
         M = len([i for i in system if i.get("Type") == "M"])
         states.append((N, M))
         curr_obj = system[0]
-        print(N, M, curr_obj.get("Death"), curr_obj.get("Id"), curr_obj.get("Type"))
+        print(N, M, curr_obj.get("Death") - t, curr_obj.get("Id"), curr_obj.get("Type"))
         system = system[1:]
         t = curr_obj.get("Death")
         temp = rnd.random()
@@ -118,7 +118,7 @@ def simulate():
     M = len([i for i in system if i.get("Type") == "M"])
     states.append((N, M))
     curr_obj = system[0]
-    print(N, M, curr_obj.get("Death"), curr_obj.get("Id"), curr_obj.get("Type"))
+    print(N, M, curr_obj.get("Death") - t, curr_obj.get("Id"), curr_obj.get("Type"))
 
     for i in system: objects.append(i)
     objects.sort(key = lambda i: i.get("Id"))
